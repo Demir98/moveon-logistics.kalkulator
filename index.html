@@ -110,107 +110,124 @@
     padding:12px 22px;border-radius:30px;opacity:0;pointer-events:none;transition:all .25s;z-index:50;
   }
   .copy-toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+  .lang-switch{
+    position:fixed;top:18px;right:18px;display:flex;gap:4px;
+    background:var(--panel);border:1px solid var(--line);border-radius:20px;padding:4px;z-index:40;
+  }
+  .lang-btn{
+    background:transparent;border:none;color:var(--platinum-dim);font-family:'Jost',sans-serif;
+    font-size:11px;letter-spacing:.08em;padding:7px 13px;border-radius:16px;cursor:pointer;transition:all .15s;
+  }
+  .lang-btn.active{background:var(--platinum);color:var(--navy-1)}
+  @media (max-width:520px){.lang-switch{top:10px;right:10px}.lang-btn{padding:6px 10px;font-size:10.5px}}
 </style>
 </head>
 <body>
+
+<div class="lang-switch" id="langSwitch">
+  <button class="lang-btn active" data-lang="de" type="button">DE</button>
+  <button class="lang-btn" data-lang="sr" type="button">SR</button>
+</div>
+
 <div class="wrap">
-  <div class="kicker">Interner Kalkulator · MoveOn Logistics</div>
-  <h1 class="title">Transport-Kalkulator</h1>
-  <p class="sub">Start und Ziel eingeben, Optionen wählen, berechnen. Die Strecke kommt automatisch von OpenStreetMap, der Dieselpreis vom offiziellen EU-Wochenbericht — beides lässt sich manuell anpassen.</p>
+  <div class="kicker" data-i18n="kicker">Interner Kalkulator · MoveOn Logistics</div>
+  <h1 class="title" data-i18n="title">Transport-Kalkulator</h1>
+  <p class="sub" data-i18n="sub">Start und Ziel eingeben, Optionen wählen, berechnen. Die Strecke kommt automatisch von OpenStreetMap, der Dieselpreis vom offiziellen EU-Wochenbericht — beides lässt sich manuell anpassen.</p>
 
   <div class="grid">
     <!-- AUFTRAG -->
     <div class="card">
-      <h2>Auftrag</h2>
+      <h2 data-i18n="cardAuftrag">Auftrag</h2>
 
       <div class="field">
-        <label>Abholort (von)</label>
-        <input id="fromCity" type="text" placeholder="z. B. Frankfurt am Main" value="">
+        <label data-i18n="lblFrom">Abholort (von)</label>
+        <input id="fromCity" type="text" data-i18n-placeholder="phFrom" placeholder="z. B. Frankfurt am Main" value="">
       </div>
       <div class="field">
-        <label>Lieferort (nach)</label>
-        <input id="toCity" type="text" placeholder="z. B. Nizza, Frankreich" value="">
+        <label data-i18n="lblTo">Lieferort (nach)</label>
+        <input id="toCity" type="text" data-i18n-placeholder="phTo" placeholder="z. B. Nizza, Frankreich" value="">
       </div>
 
       <div class="field">
-        <label>Basis (Start-/Rückkehrort des Fahrzeugs)</label>
+        <label data-i18n="lblBase">Basis (Start-/Rückkehrort des Fahrzeugs)</label>
         <input id="baseCity" type="text" value="Industriestraße 10, Altenstadt, Deutschland">
-        <div class="hint">Wenn die Suche die Basis nicht findet: Postleitzahl ergänzen (z. B. „Industriestraße 10, 63674 Altenstadt, Deutschland") — es gibt mehrere Orte namens Altenstadt in Deutschland.</div>
+        <div class="hint" data-i18n="hintBase">Wenn die Suche die Basis nicht findet: Postleitzahl ergänzen (z. B. „Industriestraße 10, 63674 Altenstadt, Deutschland") — es gibt mehrere Orte namens Altenstadt in Deutschland.</div>
       </div>
 
       <div class="field">
-        <label>Anfahrt zum Abholort (leer ab Basis)</label>
+        <label data-i18n="lblAnfahrt">Anfahrt zum Abholort (leer ab Basis)</label>
         <div class="choice">
-          <div class="choice-btn active" data-group="anfahrt" data-value="ja"><span class="dot"></span>Ja</div>
-          <div class="choice-btn" data-group="anfahrt" data-value="ne"><span class="dot"></span>Nein — Start ist Basis/unterwegs</div>
+          <div class="choice-btn active" data-group="anfahrt" data-value="ja"><span class="dot"></span><span data-i18n="btnJa">Ja</span></div>
+          <div class="choice-btn" data-group="anfahrt" data-value="ne"><span class="dot"></span><span data-i18n="btnNeinStart">Nein — Start ist Basis/unterwegs</span></div>
         </div>
       </div>
 
       <div class="field">
-        <label>Anhänger</label>
+        <label data-i18n="lblAnhanger">Anhänger</label>
         <div class="choice">
-          <div class="choice-btn active" data-group="anhanger" data-value="geschlossen"><span class="dot"></span>Geschlossen (Premium)</div>
-          <div class="choice-btn" data-group="anhanger" data-value="offen"><span class="dot"></span>Offen (Standard)</div>
+          <div class="choice-btn active" data-group="anhanger" data-value="geschlossen"><span class="dot"></span><span data-i18n="btnGeschlossen">Geschlossen (Premium)</span></div>
+          <div class="choice-btn" data-group="anhanger" data-value="offen"><span class="dot"></span><span data-i18n="btnOffen">Offen (Standard)</span></div>
         </div>
       </div>
 
       <div class="field">
-        <label>Rückfahrt</label>
+        <label data-i18n="lblRueck">Rückfahrt</label>
         <div class="choice">
-          <div class="choice-btn active" data-group="povratak" data-value="prazno"><span class="dot"></span>Leer zurück zur Basis</div>
-          <div class="choice-btn" data-group="povratak" data-value="tovar"><span class="dot"></span>Rückladung (anderer Auftrag)</div>
+          <div class="choice-btn active" data-group="povratak" data-value="prazno"><span class="dot"></span><span data-i18n="btnLeerZurueck">Leer zurück zur Basis</span></div>
+          <div class="choice-btn" data-group="povratak" data-value="tovar"><span class="dot"></span><span data-i18n="btnRueckladung">Rückladung (anderer Auftrag)</span></div>
         </div>
       </div>
 
       <div class="field">
-        <label>Strecke</label>
-        <button class="btn" id="routeBtn" style="flex:none;width:100%;padding:13px">Strecke berechnen (OpenStreetMap)</button>
+        <label data-i18n="lblStrecke">Strecke</label>
+        <button class="btn" id="routeBtn" style="flex:none;width:100%;padding:13px" data-i18n="btnRoute">Strecke berechnen (OpenStreetMap)</button>
         <div class="status-line" id="routeStatus"></div>
       </div>
 
       <div class="row2">
         <div class="field">
-          <label>Km — Hauptstrecke (manuell/Override)</label>
-          <input id="kmMain" type="number" placeholder="füllt sich automatisch">
+          <label data-i18n="lblKmMain">Km — Hauptstrecke (manuell/Override)</label>
+          <input id="kmMain" type="number" data-i18n-placeholder="phKmMain" placeholder="füllt sich automatisch">
         </div>
         <div class="field">
-          <label>Inland / Ausland</label>
+          <label data-i18n="lblInAusland">Inland / Ausland</label>
           <select id="auslandMode">
-            <option value="auto">Automatisch (aus Adressen)</option>
-            <option value="inland">Inland (Deutschland)</option>
-            <option value="ausland">Ausland</option>
+            <option value="auto" data-i18n="optAuto">Automatisch (aus Adressen)</option>
+            <option value="inland" data-i18n="optInland">Inland (Deutschland)</option>
+            <option value="ausland" data-i18n="optAusland">Ausland</option>
           </select>
         </div>
       </div>
       <div class="row2">
         <div class="field">
-          <label>Km — leer bis Abholung</label>
+          <label data-i18n="lblKmDeadhead">Km — leer bis Abholung</label>
           <input id="kmDeadhead" type="number" value="0">
         </div>
         <div class="field">
-          <label>Km — leer zurück zur Basis</label>
+          <label data-i18n="lblKmReturn">Km — leer zurück zur Basis</label>
           <input id="kmReturn" type="number" value="0">
         </div>
       </div>
-      <div class="hint" style="margin:-6px 0 16px">Die Felder oben füllen sich nach „Strecke berechnen" automatisch — nur bei Bedarf manuell korrigieren.</div>
+      <div class="hint" style="margin:-6px 0 16px" data-i18n="hintKm">Die Felder oben füllen sich nach „Strecke berechnen" automatisch — nur bei Bedarf manuell korrigieren.</div>
 
       <div class="row2">
         <div class="field">
-          <label>Fahrzeugwert (€)</label>
+          <label data-i18n="lblFahrzeugwert">Fahrzeugwert (€)</label>
           <input id="fahrzeugwert" type="number" value="250000">
         </div>
         <div class="field">
-          <label>Versicherung</label>
+          <label data-i18n="lblVersicherung">Versicherung</label>
           <select id="insureSelect">
-            <option value="ja">Wir versichern (Aufschlag)</option>
-            <option value="ne">Kunde versichert selbst</option>
+            <option value="ja" data-i18n="optVersJa">Wir versichern (Aufschlag)</option>
+            <option value="ne" data-i18n="optVersNe">Kunde versichert selbst</option>
           </select>
         </div>
       </div>
 
       <div class="row2">
         <div class="field">
-          <label>Maut / Vignette Ausland (€)</label>
+          <label data-i18n="lblMaut">Maut / Vignette Ausland (€)</label>
           <input id="maut" type="number" value="0">
           <div class="chips" id="mautChips">
             <button class="chip" data-v="0">DE: 0</button>
@@ -223,88 +240,310 @@
           </div>
         </div>
         <div class="field">
-          <label>Fähre (€, hin + zurück)</label>
+          <label data-i18n="lblFaehre">Fähre (€, hin + zurück)</label>
           <input id="faehre" type="number" value="0">
         </div>
       </div>
 
       <div class="field">
-        <label>Zusatztage (Fähre / Warten)</label>
+        <label data-i18n="lblZusatztage">Zusatztage (Fähre / Warten)</label>
         <input id="zusatztage" type="number" value="0">
       </div>
 
       <div class="btns">
-        <button class="btn primary" id="calcBtn">Berechnen</button>
-        <button class="btn" id="copyBtn" disabled>Angebotstext kopieren</button>
+        <button class="btn primary" id="calcBtn" data-i18n="btnBerechnen">Berechnen</button>
+        <button class="btn" id="copyBtn" disabled data-i18n="btnCopy">Angebotstext kopieren</button>
       </div>
     </div>
 
     <!-- ANGEBOT -->
     <div class="card">
-      <h2>Angebot</h2>
-      <div id="outPlaceholder" class="out-placeholder">Daten eingeben und auf „Berechnen" klicken, um Preis und Kostenaufschlüsselung zu sehen.</div>
+      <h2 data-i18n="cardAngebot">Angebot</h2>
+      <div id="outPlaceholder" class="out-placeholder" data-i18n="outPlaceholder">Daten eingeben und auf „Berechnen" klicken, um Preis und Kostenaufschlüsselung zu sehen.</div>
       <div id="outResult" style="display:none">
         <div class="out-hero">
-          <div class="lbl">Nettopreis</div>
+          <div class="lbl" data-i18n="lblNetto">Nettopreis</div>
           <div class="amt" id="outNet">—</div>
           <div class="sub2" id="outGross">—</div>
         </div>
-        <div class="out-line"><span class="k">Gefahrene km (gesamt)</span><span class="v" id="outKm">—</span></div>
-        <div class="out-line"><span class="k">Zeit (Std. / Tage)</span><span class="v" id="outTime">—</span></div>
-        <div class="out-line"><span class="k">Diesel</span><span class="v" id="outDiesel">—</span></div>
-        <div class="out-line"><span class="k">Verschleiß Fahrzeug + Anhänger</span><span class="v" id="outWear">—</span></div>
-        <div class="out-line"><span class="k">Arbeit (Mitarbeiterstunden)</span><span class="v" id="outLabor">—</span></div>
-        <div class="out-line"><span class="k">Spesen</span><span class="v" id="outPerdiem">—</span></div>
-        <div class="out-line"><span class="k">Hotel</span><span class="v" id="outHotel">—</span></div>
-        <div class="out-line"><span class="k">Maut + Fähre</span><span class="v" id="outTollferry">—</span></div>
-        <div class="out-line"><span class="k">Anteil Fixkosten</span><span class="v" id="outFixed">—</span></div>
-        <div class="out-line"><span class="k">Transportversicherung</span><span class="v" id="outInsurance">—</span></div>
-        <div class="out-line total"><span class="k">Selbstkosten</span><span class="v" id="outSelfcost">—</span></div>
-        <div class="out-line total remain"><span class="k">Übrig je Fahrt (ohne Fixkostenanteil)</span><span class="v" id="outRemain">—</span></div>
+        <div class="out-line"><span class="k" data-i18n="lblKmTotal">Gefahrene km (gesamt)</span><span class="v" id="outKm">—</span></div>
+        <div class="out-line"><span class="k" data-i18n="lblZeit">Zeit (Std. / Tage)</span><span class="v" id="outTime">—</span></div>
+        <div class="out-line"><span class="k" data-i18n="lblDiesel">Diesel</span><span class="v" id="outDiesel">—</span></div>
+        <div class="out-line"><span class="k" data-i18n="lblVerschleiss">Verschleiß Fahrzeug + Anhänger</span><span class="v" id="outWear">—</span></div>
+        <div class="out-line"><span class="k" data-i18n="lblArbeit">Arbeit (Mitarbeiterstunden)</span><span class="v" id="outLabor">—</span></div>
+        <div class="out-line"><span class="k" data-i18n="lblSpesen">Spesen</span><span class="v" id="outPerdiem">—</span></div>
+        <div class="out-line"><span class="k" data-i18n="lblHotel">Hotel</span><span class="v" id="outHotel">—</span></div>
+        <div class="out-line"><span class="k" data-i18n="lblMautFaehre">Maut + Fähre</span><span class="v" id="outTollferry">—</span></div>
+        <div class="out-line"><span class="k" data-i18n="lblFixAnteil">Anteil Fixkosten</span><span class="v" id="outFixed">—</span></div>
+        <div class="out-line"><span class="k" data-i18n="lblTransVers">Transportversicherung</span><span class="v" id="outInsurance">—</span></div>
+        <div class="out-line total"><span class="k" data-i18n="lblSelbstkosten">Selbstkosten</span><span class="v" id="outSelfcost">—</span></div>
+        <div class="out-line total remain"><span class="k" data-i18n="lblUebrig">Übrig je Fahrt (ohne Fixkostenanteil)</span><span class="v" id="outRemain">—</span></div>
       </div>
     </div>
   </div>
 
   <details class="assume">
-    <summary>Annahmen anpassen <span class="plus">+</span></summary>
+    <summary><span data-i18n="summaryAssume">Annahmen anpassen</span> <span class="plus">+</span></summary>
     <div class="assume-body">
       <div class="field" style="max-width:360px">
-        <label>Dieselpreis netto €/l</label>
+        <label data-i18n="lblDieselpreis">Dieselpreis netto €/l</label>
         <input id="a_dieselpreis" type="number" step="0.01" value="1.45">
-        <div class="status-line" id="dieselStatus">Versuche, den Preis vom EU-Bericht zu laden…</div>
+        <div class="status-line" id="dieselStatus"></div>
       </div>
       <div class="assume-grid">
-        <div class="field"><label>Mitarbeiterkosten €/Std (brutto + AG-Anteil)</label><input id="a_mitarbeiterStd" type="number" step="0.1" value="34.6"></div>
-        <div class="field"><label>Verbrauch geschlossen L/100 km</label><input id="a_verbrauchGeschlossen" type="number" step="0.1" value="18"></div>
-        <div class="field"><label>Verbrauch offen L/100 km</label><input id="a_verbrauchOffen" type="number" step="0.1" value="18"></div>
-        <div class="field"><label>Verschleiß Zugfahrzeug €/km</label><input id="a_verschleissZug" type="number" step="0.01" value="0.12"></div>
-        <div class="field"><label>Verschleiß Anhänger €/km</label><input id="a_verschleissAnhaenger" type="number" step="0.01" value="0.05"></div>
-        <div class="field"><label>Ø km/h inkl. Pausen</label><input id="a_kmh" type="number" value="68"></div>
-        <div class="field"><label>Laden + Entladen Std je Auftrag</label><input id="a_ladenEntladenStd" type="number" step="0.5" value="2"></div>
-        <div class="field"><label>Max. Arbeitszeit je Tag Std</label><input id="a_maxArbeitszeitStd" type="number" value="10"></div>
-        <div class="field"><label>Spesen Inland €/Tag</label><input id="a_spesenInland" type="number" value="28"></div>
-        <div class="field"><label>Spesen Ausland €/Tag</label><input id="a_spesenAusland" type="number" value="40"></div>
-        <div class="field"><label>Hotel €/Nacht</label><input id="a_hotelNacht" type="number" value="90"></div>
-        <div class="field"><label>Fixkosten/Monat geschlossen (€)</label><input id="a_fixkostenGeschlossen" type="number" value="1437"></div>
-        <div class="field"><label>Fixkosten/Monat offen (€)</label><input id="a_fixkostenOffen" type="number" value="787"></div>
-        <div class="field"><label>Aufträge je Monat (für Fixkostenanteil)</label><input id="a_auftraegeMonat" type="number" value="6"></div>
-        <div class="field"><label>Versicherung % vom Fahrzeugwert je Fahrt</label><input id="a_versicherungProzent" type="number" step="0.01" value="0.08"></div>
-        <div class="field"><label>Gewinnaufschlag %</label><input id="a_gewinnaufschlag" type="number" value="35"></div>
-        <div class="field"><label>Mindestpreis netto (€)</label><input id="a_mindestpreis" type="number" value="390"></div>
-        <div class="field"><label>Umsatzsteuer %</label><input id="a_umsatzsteuer" type="number" value="19"></div>
+        <div class="field"><label data-i18n="aMitarbeiter">Mitarbeiterkosten €/Std (brutto + AG-Anteil)</label><input id="a_mitarbeiterStd" type="number" step="0.1" value="34.6"></div>
+        <div class="field"><label data-i18n="aVerbGeschlossen">Verbrauch geschlossen L/100 km</label><input id="a_verbrauchGeschlossen" type="number" step="0.1" value="18"></div>
+        <div class="field"><label data-i18n="aVerbOffen">Verbrauch offen L/100 km</label><input id="a_verbrauchOffen" type="number" step="0.1" value="18"></div>
+        <div class="field"><label data-i18n="aVerschleissZug">Verschleiß Zugfahrzeug €/km</label><input id="a_verschleissZug" type="number" step="0.01" value="0.12"></div>
+        <div class="field"><label data-i18n="aVerschleissAnh">Verschleiß Anhänger €/km</label><input id="a_verschleissAnhaenger" type="number" step="0.01" value="0.05"></div>
+        <div class="field"><label data-i18n="aKmh">Ø km/h inkl. Pausen</label><input id="a_kmh" type="number" value="68"></div>
+        <div class="field"><label data-i18n="aLaden">Laden + Entladen Std je Auftrag</label><input id="a_ladenEntladenStd" type="number" step="0.5" value="2"></div>
+        <div class="field"><label data-i18n="aMaxArbeit">Max. Arbeitszeit je Tag Std</label><input id="a_maxArbeitszeitStd" type="number" value="10"></div>
+        <div class="field"><label data-i18n="aSpesenInland">Spesen Inland €/Tag</label><input id="a_spesenInland" type="number" value="28"></div>
+        <div class="field"><label data-i18n="aSpesenAusland">Spesen Ausland €/Tag</label><input id="a_spesenAusland" type="number" value="40"></div>
+        <div class="field"><label data-i18n="aHotel">Hotel €/Nacht</label><input id="a_hotelNacht" type="number" value="90"></div>
+        <div class="field"><label data-i18n="aFixGeschlossen">Fixkosten/Monat geschlossen (€)</label><input id="a_fixkostenGeschlossen" type="number" value="1437"></div>
+        <div class="field"><label data-i18n="aFixOffen">Fixkosten/Monat offen (€)</label><input id="a_fixkostenOffen" type="number" value="787"></div>
+        <div class="field"><label data-i18n="aAuftraege">Aufträge je Monat (für Fixkostenanteil)</label><input id="a_auftraegeMonat" type="number" value="6"></div>
+        <div class="field"><label data-i18n="aVersProzent">Versicherung % vom Fahrzeugwert je Fahrt</label><input id="a_versicherungProzent" type="number" step="0.01" value="0.08"></div>
+        <div class="field"><label data-i18n="aGewinn">Gewinnaufschlag %</label><input id="a_gewinnaufschlag" type="number" value="35"></div>
+        <div class="field"><label data-i18n="aMindestpreis">Mindestpreis netto (€)</label><input id="a_mindestpreis" type="number" value="390"></div>
+        <div class="field"><label data-i18n="aUst">Umsatzsteuer %</label><input id="a_umsatzsteuer" type="number" value="19"></div>
       </div>
       <div class="assume-reset">
-        <button class="chip" id="resetAssume">Auf Startwerte zurücksetzen</button>
+        <button class="chip" id="resetAssume" data-i18n="resetBtn">Auf Startwerte zurücksetzen</button>
       </div>
     </div>
   </details>
 </div>
 
-<div class="copy-toast" id="toast">Text kopiert</div>
+<div class="copy-toast" id="toast" data-i18n="toastCopied">Text kopiert</div>
 
 <script>
 (function(){
   'use strict';
+
+  var I18N = {
+    de: {
+      pageTitle: 'MoveOn — Transport-Kalkulator',
+      kicker: 'Interner Kalkulator · MoveOn Logistics',
+      title: 'Transport-Kalkulator',
+      sub: 'Start und Ziel eingeben, Optionen wählen, berechnen. Die Strecke kommt automatisch von OpenStreetMap, der Dieselpreis vom offiziellen EU-Wochenbericht — beides lässt sich manuell anpassen.',
+      cardAuftrag: 'Auftrag',
+      lblFrom: 'Abholort (von)',
+      phFrom: 'z. B. Frankfurt am Main',
+      lblTo: 'Lieferort (nach)',
+      phTo: 'z. B. Nizza, Frankreich',
+      lblBase: 'Basis (Start-/Rückkehrort des Fahrzeugs)',
+      hintBase: 'Wenn die Suche die Basis nicht findet: Postleitzahl ergänzen (z. B. „Industriestraße 10, 63674 Altenstadt, Deutschland") — es gibt mehrere Orte namens Altenstadt in Deutschland.',
+      lblAnfahrt: 'Anfahrt zum Abholort (leer ab Basis)',
+      btnJa: 'Ja',
+      btnNeinStart: 'Nein — Start ist Basis/unterwegs',
+      lblAnhanger: 'Anhänger',
+      btnGeschlossen: 'Geschlossen (Premium)',
+      btnOffen: 'Offen (Standard)',
+      lblRueck: 'Rückfahrt',
+      btnLeerZurueck: 'Leer zurück zur Basis',
+      btnRueckladung: 'Rückladung (anderer Auftrag)',
+      lblStrecke: 'Strecke',
+      btnRoute: 'Strecke berechnen (OpenStreetMap)',
+      lblKmMain: 'Km — Hauptstrecke (manuell/Override)',
+      phKmMain: 'füllt sich automatisch',
+      lblInAusland: 'Inland / Ausland',
+      optAuto: 'Automatisch (aus Adressen)',
+      optInland: 'Inland (Deutschland)',
+      optAusland: 'Ausland',
+      lblKmDeadhead: 'Km — leer bis Abholung',
+      lblKmReturn: 'Km — leer zurück zur Basis',
+      hintKm: 'Die Felder oben füllen sich nach „Strecke berechnen" automatisch — nur bei Bedarf manuell korrigieren.',
+      lblFahrzeugwert: 'Fahrzeugwert (€)',
+      lblVersicherung: 'Versicherung',
+      optVersJa: 'Wir versichern (Aufschlag)',
+      optVersNe: 'Kunde versichert selbst',
+      lblMaut: 'Maut / Vignette Ausland (€)',
+      lblFaehre: 'Fähre (€, hin + zurück)',
+      lblZusatztage: 'Zusatztage (Fähre / Warten)',
+      btnBerechnen: 'Berechnen',
+      btnCopy: 'Angebotstext kopieren',
+      cardAngebot: 'Angebot',
+      outPlaceholder: 'Daten eingeben und auf „Berechnen" klicken, um Preis und Kostenaufschlüsselung zu sehen.',
+      lblNetto: 'Nettopreis',
+      lblKmTotal: 'Gefahrene km (gesamt)',
+      lblZeit: 'Zeit (Std. / Tage)',
+      lblDiesel: 'Diesel',
+      lblVerschleiss: 'Verschleiß Fahrzeug + Anhänger',
+      lblArbeit: 'Arbeit (Mitarbeiterstunden)',
+      lblSpesen: 'Spesen',
+      lblHotel: 'Hotel',
+      lblMautFaehre: 'Maut + Fähre',
+      lblFixAnteil: 'Anteil Fixkosten',
+      lblTransVers: 'Transportversicherung',
+      lblSelbstkosten: 'Selbstkosten',
+      lblUebrig: 'Übrig je Fahrt (ohne Fixkostenanteil)',
+      summaryAssume: 'Annahmen anpassen',
+      lblDieselpreis: 'Dieselpreis netto €/l',
+      dieselLoading: 'Versuche, den Preis vom EU-Bericht zu laden…',
+      aMitarbeiter: 'Mitarbeiterkosten €/Std (brutto + AG-Anteil)',
+      aVerbGeschlossen: 'Verbrauch geschlossen L/100 km',
+      aVerbOffen: 'Verbrauch offen L/100 km',
+      aVerschleissZug: 'Verschleiß Zugfahrzeug €/km',
+      aVerschleissAnh: 'Verschleiß Anhänger €/km',
+      aKmh: 'Ø km/h inkl. Pausen',
+      aLaden: 'Laden + Entladen Std je Auftrag',
+      aMaxArbeit: 'Max. Arbeitszeit je Tag Std',
+      aSpesenInland: 'Spesen Inland €/Tag',
+      aSpesenAusland: 'Spesen Ausland €/Tag',
+      aHotel: 'Hotel €/Nacht',
+      aFixGeschlossen: 'Fixkosten/Monat geschlossen (€)',
+      aFixOffen: 'Fixkosten/Monat offen (€)',
+      aAuftraege: 'Aufträge je Monat (für Fixkostenanteil)',
+      aVersProzent: 'Versicherung % vom Fahrzeugwert je Fahrt',
+      aGewinn: 'Gewinnaufschlag %',
+      aMindestpreis: 'Mindestpreis netto (€)',
+      aUst: 'Umsatzsteuer %',
+      resetBtn: 'Auf Startwerte zurücksetzen',
+      toastCopied: 'Text kopiert',
+      routeNeedFromTo: 'Bitte Start und Ziel eingeben.',
+      routeLoading: 'Lade Strecke…',
+      routeOk: function(km){ return 'Strecke: ' + km + ' km insgesamt.'; },
+      routeFail: function(msg){ return 'Automatische Berechnung fehlgeschlagen (' + msg + '). Bitte km unten manuell eingeben.'; },
+      dieselOk: function(week){ return 'Geladen vom EU-Wochenbericht (Woche ab ' + week + ').'; },
+      dieselFail: 'Automatisches Laden fehlgeschlagen — Startwert wird verwendet, bei Bedarf manuell ändern.',
+      calcErrNoKm: 'Bitte mindestens die Hauptstrecke (km) eingeben, um den Preis zu berechnen.',
+      grossLabel: function(ust, val){ return 'Brutto (inkl. USt. ' + ust + '%): ' + val; },
+      offerTemplate: function(d){
+        return 'MoveOn Logistics — interne Kalkulation\n' +
+          'Strecke: ' + d.from + ' → ' + d.to + '\n' +
+          'Km gesamt: ' + d.km + ' km\n' +
+          'Dauer: ' + d.time + '\n' +
+          'Nettopreis: ' + d.net + '\n' +
+          'Bruttopreis: ' + d.gross + '\n' +
+          'Selbstkosten: ' + d.self + '\n' +
+          'Übrig je Fahrt (ohne Fixkostenanteil): ' + d.remain;
+      }
+    },
+    sr: {
+      pageTitle: 'MoveOn — Kalkulator transporta',
+      kicker: 'Interni kalkulator · MoveOn Logistics',
+      title: 'Kalkulator transporta',
+      sub: 'Unesi polazište i odredište, izaberi opcije, izračunaj. Ruta se automatski učitava sa OpenStreetMap-a, cena dizela iz zvaničnog EU nedeljnog izveštaja — oboje može ručno da se izmeni.',
+      cardAuftrag: 'Nalog',
+      lblFrom: 'Mesto preuzimanja (od)',
+      phFrom: 'npr. Frankfurt na Majni',
+      lblTo: 'Mesto isporuke (do)',
+      phTo: 'npr. Nica, Francuska',
+      lblBase: 'Baza (polazna/povratna lokacija vozila)',
+      hintBase: 'Ako pretraga ne pronađe bazu: dodaj poštanski broj (npr. „Industriestraße 10, 63674 Altenstadt, Nemačka") — postoji više mesta sa imenom Altenstadt u Nemačkoj.',
+      lblAnfahrt: 'Dolazak do mesta preuzimanja (prazno iz baze)',
+      btnJa: 'Da',
+      btnNeinStart: 'Ne — start je baza/na putu',
+      lblAnhanger: 'Prikolica',
+      btnGeschlossen: 'Zatvorena (Premium)',
+      btnOffen: 'Otvorena (Standard)',
+      lblRueck: 'Povratak',
+      btnLeerZurueck: 'Prazno nazad do baze',
+      btnRueckladung: 'Povratni tovar (drugi nalog)',
+      lblStrecke: 'Ruta',
+      btnRoute: 'Izračunaj rutu (OpenStreetMap)',
+      lblKmMain: 'Km — glavna ruta (ručno/override)',
+      phKmMain: 'popunjava se automatski',
+      lblInAusland: 'Unutra / Inostranstvo',
+      optAuto: 'Automatski (iz adresa)',
+      optInland: 'Unutra (Nemačka)',
+      optAusland: 'Inostranstvo',
+      lblKmDeadhead: 'Km — prazno do preuzimanja',
+      lblKmReturn: 'Km — prazno nazad do baze',
+      hintKm: 'Polja iznad se popunjavaju automatski posle „Izračunaj rutu" — ručno ih menjaj samo po potrebi.',
+      lblFahrzeugwert: 'Vrednost vozila (€)',
+      lblVersicherung: 'Osiguranje',
+      optVersJa: 'Mi osiguravamo (dodatak)',
+      optVersNe: 'Klijent sam osigurava',
+      lblMaut: 'Putarina / Vinjeta inostranstvo (€)',
+      lblFaehre: 'Trajekt (€, u oba pravca)',
+      lblZusatztage: 'Dodatni dani (trajekt / čekanje)',
+      btnBerechnen: 'Izračunaj',
+      btnCopy: 'Kopiraj tekst ponude',
+      cardAngebot: 'Ponuda',
+      outPlaceholder: 'Unesi podatke i klikni na „Izračunaj" da vidiš cenu i raspodelu troškova.',
+      lblNetto: 'Neto cena',
+      lblKmTotal: 'Pređeni km (ukupno)',
+      lblZeit: 'Vreme (sati / dani)',
+      lblDiesel: 'Dizel',
+      lblVerschleiss: 'Habanje vozila + prikolice',
+      lblArbeit: 'Rad (sati zaposlenog)',
+      lblSpesen: 'Dnevnice',
+      lblHotel: 'Hotel',
+      lblMautFaehre: 'Putarina + trajekt',
+      lblFixAnteil: 'Udeo fiksnih troškova',
+      lblTransVers: 'Osiguranje transporta',
+      lblSelbstkosten: 'Sopstveni trošak',
+      lblUebrig: 'Preostalo po vožnji (bez udela fiksnih troškova)',
+      summaryAssume: 'Prilagodi pretpostavke',
+      lblDieselpreis: 'Neto cena dizela €/l',
+      dieselLoading: 'Pokušavam da učitam cenu iz EU izveštaja…',
+      aMitarbeiter: 'Trošak zaposlenog €/h (bruto + doprinosi poslodavca)',
+      aVerbGeschlossen: 'Potrošnja zatvorena L/100 km',
+      aVerbOffen: 'Potrošnja otvorena L/100 km',
+      aVerschleissZug: 'Habanje vučnog vozila €/km',
+      aVerschleissAnh: 'Habanje prikolice €/km',
+      aKmh: 'Prosečno km/h uklj. pauze',
+      aLaden: 'Utovar + istovar, sati po nalogu',
+      aMaxArbeit: 'Maks. radno vreme dnevno (sati)',
+      aSpesenInland: 'Dnevnice unutra €/dan',
+      aSpesenAusland: 'Dnevnice inostranstvo €/dan',
+      aHotel: 'Hotel €/noć',
+      aFixGeschlossen: 'Fiksni troškovi/mesec zatvorena (€)',
+      aFixOffen: 'Fiksni troškovi/mesec otvorena (€)',
+      aAuftraege: 'Nalozi mesečno (za udeo fiksnih troškova)',
+      aVersProzent: 'Osiguranje % od vrednosti vozila po vožnji',
+      aGewinn: 'Marža (profit) %',
+      aMindestpreis: 'Minimalna neto cena (€)',
+      aUst: 'PDV %',
+      resetBtn: 'Vrati na početne vrednosti',
+      toastCopied: 'Tekst kopiran',
+      routeNeedFromTo: 'Unesi polazište i odredište.',
+      routeLoading: 'Učitavam rutu…',
+      routeOk: function(km){ return 'Ruta: ' + km + ' km ukupno.'; },
+      routeFail: function(msg){ return 'Automatski proračun nije uspeo (' + msg + '). Unesi km ručno ispod.'; },
+      dieselOk: function(week){ return 'Učitano iz EU nedeljnog izveštaja (nedelja od ' + week + ').'; },
+      dieselFail: 'Automatsko učitavanje nije uspelo — koristi se početna vrednost, po potrebi izmeni ručno.',
+      calcErrNoKm: 'Unesi bar glavnu rutu (km) da bi se izračunala cena.',
+      grossLabel: function(ust, val){ return 'Bruto (uklj. PDV ' + ust + '%): ' + val; },
+      offerTemplate: function(d){
+        return 'MoveOn Logistics — interna kalkulacija\n' +
+          'Ruta: ' + d.from + ' → ' + d.to + '\n' +
+          'Km ukupno: ' + d.km + ' km\n' +
+          'Trajanje: ' + d.time + '\n' +
+          'Neto cena: ' + d.net + '\n' +
+          'Bruto cena: ' + d.gross + '\n' +
+          'Sopstveni trošak: ' + d.self + '\n' +
+          'Preostalo po vožnji (bez udela fiksnih troškova): ' + d.remain;
+      }
+    }
+  };
+
+  var currentLang = 'de';
+  function tr(key){ return I18N[currentLang][key]; }
+
+  function applyLang(lang){
+    currentLang = I18N[lang] ? lang : 'de';
+    document.documentElement.lang = currentLang;
+    document.title = tr('pageTitle');
+    document.querySelectorAll('[data-i18n]').forEach(function(el){
+      el.textContent = tr(el.getAttribute('data-i18n'));
+    });
+    document.querySelectorAll('[data-i18n-placeholder]').forEach(function(el){
+      el.placeholder = tr(el.getAttribute('data-i18n-placeholder'));
+    });
+    document.querySelectorAll('.lang-btn').forEach(function(b){
+      b.classList.toggle('active', b.getAttribute('data-lang') === currentLang);
+    });
+    try{ localStorage.setItem('moveon_kalkulator_lang', currentLang); }catch(e){ /* ignore */ }
+  }
+
+  document.querySelectorAll('.lang-btn').forEach(function(b){
+    b.addEventListener('click', function(){ applyLang(b.getAttribute('data-lang')); });
+  });
 
   var DEFAULTS = {
     dieselpreis: 1.45, mitarbeiterStd: 34.6, verbrauchGeschlossen: 18, verbrauchOffen: 18,
@@ -332,6 +571,9 @@
       var a = readAssumptions();
       localStorage.setItem('moveon_kalkulator_assume', JSON.stringify(a));
     }catch(e){ /* ignore */ }
+  }
+  function loadSavedLang(){
+    try{ return localStorage.getItem('moveon_kalkulator_lang'); }catch(e){ return null; }
   }
 
   function $(id){ return document.getElementById(id); }
@@ -463,10 +705,10 @@
     var toVal = $('toCity').value.trim();
     var baseVal = $('baseCity').value.trim();
     if(!fromVal || !toVal){
-      setRouteStatus('Bitte Start und Ziel eingeben.', 'err');
+      setRouteStatus(tr('routeNeedFromTo'), 'err');
       return;
     }
-    setRouteStatus('Lade Strecke…');
+    setRouteStatus(tr('routeLoading'));
     $('routeBtn').disabled = true;
 
     var needBase = state.anfahrt === 'ja' || state.povratak === 'prazno';
@@ -485,10 +727,10 @@
         $('kmReturn').value = Math.round(kms[2]);
         lastAuslandDetected = (from.countryCode && to.countryCode) ? !(from.countryCode.toLowerCase() === 'de' && to.countryCode.toLowerCase() === 'de') : null;
         var total = kms[0] + kms[1] + kms[2];
-        setRouteStatus('Strecke: ' + Math.round(total) + ' km insgesamt.', 'ok');
+        setRouteStatus(tr('routeOk')(Math.round(total)), 'ok');
       });
     }).catch(function(err){
-      setRouteStatus('Automatische Berechnung fehlgeschlagen (' + err.message + '). Bitte km unten manuell eingeben.', 'err');
+      setRouteStatus(tr('routeFail')(err.message), 'err');
     }).finally(function(){
       $('routeBtn').disabled = false;
     });
@@ -497,6 +739,8 @@
   // ---------- live diesel price ----------
   function loadDieselPrice(){
     var statusEl = $('dieselStatus');
+    statusEl.className = 'status-line';
+    statusEl.textContent = tr('dieselLoading');
     fetch('https://www.fuel-prices.eu/lang/api/country-history.php?cc=DE')
       .then(function(r){ if(!r.ok) throw new Error('http ' + r.status); return r.json(); })
       .then(function(data){
@@ -505,7 +749,7 @@
           if(diesel[i] && diesel[i] > 0){
             $('a_dieselpreis').value = diesel[i].toFixed(3);
             statusEl.className = 'status-line ok';
-            statusEl.textContent = 'Geladen vom EU-Wochenbericht (Woche ab ' + labels[i] + ').';
+            statusEl.textContent = tr('dieselOk')(labels[i]);
             return;
           }
         }
@@ -513,7 +757,7 @@
       })
       .catch(function(){
         statusEl.className = 'status-line err';
-        statusEl.textContent = 'Automatisches Laden fehlgeschlagen — Startwert wird verwendet, bei Bedarf manuell ändern.';
+        statusEl.textContent = tr('dieselFail');
       });
   }
 
@@ -535,6 +779,7 @@
 
   function showCalcError(msg){
     var el = $('outPlaceholder');
+    el.removeAttribute('data-i18n');
     el.style.display = 'block';
     el.textContent = msg;
     el.style.color = 'var(--warn)';
@@ -544,7 +789,7 @@
   $('calcBtn').addEventListener('click', function(){
     var km = getTripKm();
     if(!km.kmMain && !km.kmDeadhead && !km.kmReturn){
-      showCalcError('Bitte mindestens die Hauptstrecke (km) eingeben, um den Preis zu berechnen.');
+      showCalcError(tr('calcErrNoKm'));
       return;
     }
     var a = readAssumptions();
@@ -568,9 +813,9 @@
     $('outPlaceholder').style.color = '';
     $('outResult').style.display = 'block';
     $('outNet').textContent = fmtEUR(res.priceNet);
-    $('outGross').textContent = 'Brutto (inkl. USt. ' + a.umsatzsteuer + '%): ' + fmtEUR(res.priceGross);
+    $('outGross').textContent = tr('grossLabel')(a.umsatzsteuer, fmtEUR(res.priceGross));
     $('outKm').textContent = Math.round(res.totalKm) + ' km';
-    $('outTime').textContent = res.workHours.toFixed(1) + ' Std / ' + res.days + ' Tag(e)';
+    $('outTime').textContent = res.workHours.toFixed(1) + ' / ' + res.days;
     $('outDiesel').textContent = fmtEUR(res.dieselCost);
     $('outWear').textContent = fmtEUR(res.wearCost);
     $('outLabor').textContent = fmtEUR(res.laborCost);
@@ -591,14 +836,15 @@
     if(!res) return;
     var from = $('fromCity').value.trim() || '—';
     var to = $('toCity').value.trim() || '—';
-    var text = 'MoveOn Logistics — interne Kalkulation\n' +
-      'Strecke: ' + from + ' → ' + to + '\n' +
-      'Km gesamt: ' + Math.round(res.totalKm) + ' km\n' +
-      'Dauer: ' + res.workHours.toFixed(1) + ' Std / ' + res.days + ' Tag(e)\n' +
-      'Nettopreis: ' + fmtEUR(res.priceNet) + '\n' +
-      'Bruttopreis: ' + fmtEUR(res.priceGross) + '\n' +
-      'Selbstkosten: ' + fmtEUR(res.selfCost) + '\n' +
-      'Übrig je Fahrt (ohne Fixkostenanteil): ' + fmtEUR(res.remainingPerTrip);
+    var text = tr('offerTemplate')({
+      from: from, to: to,
+      km: Math.round(res.totalKm),
+      time: res.workHours.toFixed(1) + ' / ' + res.days,
+      net: fmtEUR(res.priceNet),
+      gross: fmtEUR(res.priceGross),
+      self: fmtEUR(res.selfCost),
+      remain: fmtEUR(res.remainingPerTrip)
+    });
 
     function showToast(){
       var t = $('toast');
@@ -634,6 +880,9 @@
 
   // ---------- init ----------
   (function init(){
+    var savedLang = loadSavedLang();
+    applyLang(savedLang === 'sr' ? 'sr' : 'de');
+
     var saved = loadSaved();
     if(saved) applyAssumptions(saved);
     loadDieselPrice();
@@ -643,3 +892,4 @@
 </script>
 </body>
 </html>
+
