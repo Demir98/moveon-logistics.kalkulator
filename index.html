@@ -112,7 +112,7 @@
   .copy-toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 
   .lang-switch{
-    position:fixed;top:18px;right:18px;display:flex;gap:4px;
+    display:flex;gap:4px;justify-content:center;width:fit-content;margin:0 auto 32px;
     background:var(--panel);border:1px solid var(--line);border-radius:20px;padding:4px;z-index:40;
   }
   .lang-btn{
@@ -120,20 +120,20 @@
     font-size:11px;letter-spacing:.08em;padding:7px 13px;border-radius:16px;cursor:pointer;transition:all .15s;
   }
   .lang-btn.active{background:var(--platinum);color:var(--navy-1)}
-  @media (max-width:520px){.lang-switch{top:10px;right:10px}.lang-btn{padding:6px 10px;font-size:10.5px}}
+  @media (max-width:520px){.lang-btn{padding:6px 10px;font-size:10.5px}}
 </style>
 </head>
 <body>
-
-<div class="lang-switch" id="langSwitch">
-  <button class="lang-btn active" data-lang="de" type="button">DE</button>
-  <button class="lang-btn" data-lang="sr" type="button">SR</button>
-</div>
 
 <div class="wrap">
   <div class="kicker" data-i18n="kicker">Interner Kalkulator · MoveOn Logistics</div>
   <h1 class="title" data-i18n="title">Transport-Kalkulator</h1>
   <p class="sub" data-i18n="sub">Start und Ziel eingeben, Optionen wählen, berechnen. Die Strecke kommt automatisch von OpenStreetMap, der Dieselpreis vom offiziellen EU-Wochenbericht — beides lässt sich manuell anpassen.</p>
+
+  <div class="lang-switch" id="langSwitch">
+    <button class="lang-btn active" data-lang="de" type="button">DE</button>
+    <button class="lang-btn" data-lang="sr" type="button">SR</button>
+  </div>
 
   <div class="grid">
     <!-- AUFTRAG -->
@@ -892,4 +892,3 @@
 </script>
 </body>
 </html>
-
