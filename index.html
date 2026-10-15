@@ -147,6 +147,7 @@
       <div class="field">
         <label data-i18n="lblTo">Lieferort (nach)</label>
         <input id="toCity" type="text" data-i18n-placeholder="phTo" placeholder="z. B. Nizza, Frankreich" value="">
+        <div class="hint" data-i18n="hintCity">Bei Städten mit mehreren gleichnamigen Orten in Deutschland (z. B. „Frankfurt am Main" vs. „Frankfurt (Oder)", „Neustadt", „Freiburg") immer den vollständigen Namen eingeben — sonst kann die Suche den falschen, weit entfernten Ort finden.</div>
       </div>
 
       <div class="field">
@@ -335,6 +336,7 @@
       lblTo: 'Lieferort (nach)',
       phTo: 'z. B. Nizza, Frankreich',
       lblBase: 'Basis (Start-/Rückkehrort des Fahrzeugs)',
+      hintCity: 'Bei Städten mit mehreren gleichnamigen Orten in Deutschland (z. B. „Frankfurt am Main" vs. „Frankfurt (Oder)", „Neustadt", „Freiburg") immer den vollständigen Namen eingeben — sonst kann die Suche den falschen, weit entfernten Ort finden.',
       hintBase: 'Wenn die Suche die Basis nicht findet: Postleitzahl ergänzen (z. B. „Industriestraße 10, 63674 Altenstadt, Deutschland") — es gibt mehrere Orte namens Altenstadt in Deutschland.',
       lblAnfahrt: 'Anfahrt zum Abholort (leer ab Basis)',
       btnJa: 'Ja',
@@ -433,6 +435,7 @@
       lblTo: 'Mesto isporuke (do)',
       phTo: 'npr. Nica, Francuska',
       lblBase: 'Baza (polazna/povratna lokacija vozila)',
+      hintCity: 'Za gradove koji u Nemačkoj imaju više istoimenih mesta (npr. „Frankfurt na Majni" vs. „Frankfurt na Odri", „Neustadt", „Freiburg") uvek upiši pun naziv — inače pretraga može da pogodi pogrešno, daleko mesto.',
       hintBase: 'Ako pretraga ne pronađe bazu: dodaj poštanski broj (npr. „Industriestraße 10, 63674 Altenstadt, Nemačka") — postoji više mesta sa imenom Altenstadt u Nemačkoj.',
       lblAnfahrt: 'Dolazak do mesta preuzimanja (prazno iz baze)',
       btnJa: 'Da',
@@ -859,36 +862,4 @@
     }
     function fallbackCopy(){
       try{
-        var ta = document.createElement('textarea');
-        ta.value = text;
-        ta.style.position = 'fixed';
-        ta.style.opacity = '0';
-        document.body.appendChild(ta);
-        ta.focus(); ta.select();
-        document.execCommand('copy');
-        document.body.removeChild(ta);
-        showToast();
-      }catch(e2){ /* give up quietly */ }
-    }
-  });
-
-  // ---------- Annahmen zurücksetzen ----------
-  $('resetAssume').addEventListener('click', function(){
-    applyAssumptions(DEFAULTS);
-    saveAssume();
-  });
-
-  // ---------- init ----------
-  (function init(){
-    var savedLang = loadSavedLang();
-    applyLang(savedLang === 'sr' ? 'sr' : 'de');
-
-    var saved = loadSaved();
-    if(saved) applyAssumptions(saved);
-    loadDieselPrice();
-  })();
-
-})();
-</script>
-</body>
-</html>
+        var ta = document.cre
