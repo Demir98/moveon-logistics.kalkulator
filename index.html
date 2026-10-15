@@ -862,4 +862,36 @@
     }
     function fallbackCopy(){
       try{
-        var ta = document.cre
+        var ta = document.createElement('textarea');
+        ta.value = text;
+        ta.style.position = 'fixed';
+        ta.style.opacity = '0';
+        document.body.appendChild(ta);
+        ta.focus(); ta.select();
+        document.execCommand('copy');
+        document.body.removeChild(ta);
+        showToast();
+      }catch(e2){ /* give up quietly */ }
+    }
+  });
+
+  // ---------- Annahmen zurücksetzen ----------
+  $('resetAssume').addEventListener('click', function(){
+    applyAssumptions(DEFAULTS);
+    saveAssume();
+  });
+
+  // ---------- init ----------
+  (function init(){
+    var savedLang = loadSavedLang();
+    applyLang(savedLang === 'sr' ? 'sr' : 'de');
+
+    var saved = loadSaved();
+    if(saved) applyAssumptions(saved);
+    loadDieselPrice();
+  })();
+
+})();
+</script>
+</body>
+</html>
